@@ -14,3 +14,5 @@ Requirements:
 
 My test environment can be downlaoded [here](https://drive.google.com/open?id=0ByG_CWp-MUNNNzh0UVowcVk2OVk).
 
+![](https://github.com/Kjell-K/AirGym/blob/master/Results/First_Train.gif)
+
