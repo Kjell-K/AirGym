@@ -1,7 +1,7 @@
 # AirGym
 This repository integrades AirSim with openAI gym and keras-rl for autonomous copter through reinforment learning.
 
-It is based on the work of [DRL-AutonomousVehicles](https://github.com/kaihuchen/DRL-AutonomousVehicles).
+The integration to gym is adaptaed from [DRL-AutonomousVehicles](https://github.com/kaihuchen/DRL-AutonomousVehicles) and extended by the multirotor integration.
 
 Requirements:
 
