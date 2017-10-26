@@ -16,3 +16,12 @@ My test environment binaries for Win10 can be downlaoded [here](https://drive.go
 
 ![](https://github.com/Kjell-K/AirGym/blob/master/Results/First_Train.gif)
 
+Status:
+Right now the framework has proofed to be able to learn, with 3 score inputs. The score inputs take the average of the left, middle and right section of the depth image respectively. 
+
+Next step: 
+Be able to learn with full raw depth image. 
+
+Issues:
+How to pass additional information beside the image. (While using the score values, there is no difficulty to pass more information like orientation or distance from goal in the gym.Box as well)
+
