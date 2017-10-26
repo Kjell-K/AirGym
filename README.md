@@ -12,7 +12,7 @@ Requirements:
 [openAI gym](https://github.com/openai/gym)
 
 
-My test environment can be downlaoded [here](https://drive.google.com/open?id=0ByG_CWp-MUNNNzh0UVowcVk2OVk).
+My test environment binaries for Win10 can be downlaoded [here](https://drive.google.com/open?id=0ByG_CWp-MUNNNzh0UVowcVk2OVk).
 
 ![](https://github.com/Kjell-K/AirGym/blob/master/Results/First_Train.gif)
 
