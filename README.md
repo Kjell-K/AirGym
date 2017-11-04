@@ -14,7 +14,7 @@ Requirements:
 
 My test environment binaries for Win10 can be downlaoded [here](https://drive.google.com/open?id=0ByG_CWp-MUNNNzh0UVowcVk2OVk).
 
-![](https://github.com/Kjell-K/AirGym/blob/master/Results/First_Train.gif)
+[![Youtube Video here](https://img.youtube.com/vi/ZE5hPHqJC64/0.jpg)](https://youtu.be/ZE5hPHqJC64)
 
 #### Status:
 Right now the framework has proofed to be able to learn, with 3 score inputs. The score inputs take the average of the left, middle and right section of the depth image respectively. 
