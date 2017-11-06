@@ -26,9 +26,7 @@ Click here for a demo video:
 
 #### How to use:
 You can either train yourself or load the exciting weights by setting Train to True or False. 
-For right now the Test does not work if you start with it, but you have to start training and then cancel it in order to have all hte initialisations. It is not enoigh to put memmory, policy and DQN ouside of the if. I will fix that.
 CAREFUL: When you cancel thetraining with STRG + C, weights are saved and will overright the already trained weights.
-
 
 #### Status:
 Right now the framework has proofed to be able to learn, with 3 score inputs. The score inputs take the average of the left, middle and right section of the depth image respectively. 
