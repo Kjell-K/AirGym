@@ -1,3 +1,8 @@
+UPDATE: 
+- New reset integrated.
+- Updated bianries for Win 10
+- Better reward function
+
 # AirGym
 This repository integrades AirSim with openAI gym and keras-rl for autonomous copter through reinforment learning.
 
@@ -12,7 +17,7 @@ Requirements:
 [openAI gym](https://github.com/openai/gym)
 
 
-My test environment binaries for Win10 can be downlaoded [here](https://drive.google.com/open?id=0ByG_CWp-MUNNNzh0UVowcVk2OVk).
+My test environment binaries for Win10 can be downlaoded [here](https://drive.google.com/open?id=0ByG_CWp-MUNNTjg2cllsMGhRbDg).
 
 Click here for a demo video:
 
