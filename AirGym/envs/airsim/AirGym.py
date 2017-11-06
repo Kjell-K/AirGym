@@ -8,6 +8,8 @@ import logging
 import numpy as np
 import random
 import math
+from pynput import keyboard
+import time
 
 import gym
 from gym import spaces
@@ -63,9 +65,10 @@ class AirSimMultirotorEnv(gym.Env):
         distance_before = self.allLogs['distance'][-1]
         
         if abs(distance_now - distance_before) < 0.0001:
-            
-            if self.stepN > 3 and abs(self.allLogs['distance'][-1]  -  self.allLogs['distance'][-2]) == 0:
-                return -100.0, distance_now
+           
+            #Check if last 4 positions are the same. Is the copter actually moving?
+            if self.stepN > 4 and len(set(self.allLogs['distance'][len(self.allLogs['distance']):len(self.allLogs['distance'])-4:-1])) == 1: 
+                return -50.0, distance_now
             
             else: return -1.0, distance_now
             
@@ -132,8 +135,11 @@ class AirSimMultirotorEnv(gym.Env):
         # Returns
             observation (object): The initial observation of the space. Initial reward is assumed to be 0.
         """
+        if self.episodeN == 0:
+            airgym.moveToZ(-6, 3) 
+            time.sleep(2)
+        else: airgym.reset()
         
-        airgym.reset()
         self.stepN = 0
         self.episodeN += 1
         
@@ -149,3 +155,4 @@ class AirSimMultirotorEnv(gym.Env):
         # Initial state
         self.state = (self.sensors[0], self.sensors[0], self.sensors[0], direction)
         return np.array(self.state)
+    
