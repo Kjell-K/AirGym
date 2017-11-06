@@ -1,13 +1,13 @@
 UPDATE: 
 - New reset() integrated
 - Better Train / Test structure
-- Updated bianries for Win 10
+- Updated binaries for Win 10
 - Better reward function
 
 # AirGym
-This repository integrades AirSim with openAI gym and keras-rl for autonomous copter through reinforment learning.
+This repository integrates AirSim with openAI gym and keras-rl for autonomous copter through reinforcement learning.
 
-The integration to gym is adaptaed from [DRL-AutonomousVehicles](https://github.com/kaihuchen/DRL-AutonomousVehicles) and extended by the multirotor integration.
+The integration to gym is adapted from [DRL-AutonomousVehicles](https://github.com/kaihuchen/DRL-AutonomousVehicles) and extended by the multirotor integration.
 
 Requirements:
 
@@ -26,13 +26,13 @@ Click here for a demo video:
 
 #### How to use:
 You can either train yourself or load the exciting weights by setting Train to True or False. 
-CAREFUL: When you cancel thetraining with STRG + C, weights are saved and will overright the already trained weights.
+CAREFUL: When you cancel the training with STRG + C, weights are saved and will overright the already trained weights.
 
 #### Status:
 Right now the framework has proofed to be able to learn, with 3 score inputs. The score inputs take the average of the left, middle and right section of the depth image respectively. 
 
 #### Next step: 
-Be able to learn with full raw depth image. (For right now I am taking a screen shot of the DepthVis window of AirSim, since the API to recieve the DepthVis image returns false data.)
+Be able to learn with full raw depth image. (For right now I am taking a screen shot of the DepthVis window of AirSim, since the API to receive the DepthVis image returns false data.)
 
 #### Issues:
 How to pass additional information beside the image. (While using the score values, there is no difficulty to pass more information like orientation or distance from goal in the gym.Box as well)
