@@ -1,5 +1,6 @@
 UPDATE: 
-- New reset integrated.
+- New reset() integrated
+- Better Train / Test structure
 - Updated bianries for Win 10
 - Better reward function
 
