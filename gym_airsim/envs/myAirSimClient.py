@@ -158,7 +158,7 @@ class myAirSimClient(MultirotorClient):
         return total
 
 
-    def AirSim_reset_not_working(self):
+    def AirSim_reset(self):
         
         self.reset()
         time.sleep(0.2)
@@ -169,36 +169,7 @@ class myAirSimClient(MultirotorClient):
         time.sleep(3)
         
     
-    def AirSim_reset_nope(self):
-
-        self.enableApiControl(True)
-        self.armDisarm(True)
-       
-        now = self.getPosition()
-        
-        self.moveToPosition(now.x_val,now.y_val,-20,5)
-
-        self.moveToPosition(self.home_pos.x_val,self.home_pos.y_val,-20,5)
-
-        self.moveToPosition(self.home_pos.x_val,self.home_pos.y_val,-6,5)
-        
-        pitch, roll, yaw  = self.getPitchRollYaw()
-
-        while yaw > 0.02 or yaw < -0.02:
-            self.moveByAngle(0 ,0 ,-6, -0.1, 0.1)
-            pitch, roll, yaw  = self.getPitchRollYaw()
-            
-        self.moveByVelocity(0, 0, 0, 1)
-        self.rotateByYawRate(0, 1)
-        
-        now = self.getPosition()
-        
-        print(yaw)
-        print(now.x_val)
-        print(now.y_val)
-
-    
-    def AirSim_reset(self):
+    def AirSim_reset_old(self):
         
         reset = False
         z = -6.0
