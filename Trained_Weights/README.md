@@ -1,6 +1,6 @@
 
-41: DQN
+v41: DQN
 
-42: Double DQN
+v42: Double DQN
 
-43: Dueling Double DQN
+v43: Dueling Double DQN
