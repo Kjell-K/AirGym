@@ -1,13 +1,5 @@
-UPDATE: 
-- New reset() integrated
-- Better Train / Test structure
-- Updated binaries for Win 10
-- Better reward function
-
 # AirGym
-This repository integrates AirSim with openAI gym and keras-rl for autonomous copter through reinforcement learning.
-
-The integration to gym is adapted from [DRL-AutonomousVehicles](https://github.com/kaihuchen/DRL-AutonomousVehicles) and extended by the multirotor integration.
+This repository integrates AirSim with openAI gym and keras-rl for autonomous vehicles through reinforcement learning. AirSim allows you to easly create your own environment in Unreal Editor and keras-rl let gives your the RL tools to solve the task. 
 
 Requirements:
 
@@ -18,9 +10,9 @@ Requirements:
 [openAI gym](https://github.com/openai/gym)
 
 
-My test environment binaries for Win10 can be downlaoded [here](https://drive.google.com/open?id=0ByG_CWp-MUNNTjg2cllsMGhRbDg).
+My test environment binaries for Win10 can be downlaoded [here](https://drive.google.com/open?id=1iNeK47r9e54Ba554rHY8o5ADeiDVyPLz).
 
-Click here for a demo video:
+Click here for a (old (the perfor,ance is much better now)) demo video:
 
 [![Youtube Video here](https://img.youtube.com/vi/ZE5hPHqJC64/0.jpg)](https://youtu.be/ZE5hPHqJC64)
 
@@ -28,12 +20,11 @@ Click here for a demo video:
 You can either train yourself or load the exciting weights by setting Train to True or False. 
 CAREFUL: When you cancel the training with STRG + C, weights are saved and will overright the already trained weights.
 
-#### Status:
-Right now the framework has proofed to be able to learn, with 3 score inputs. The score inputs take the average of the left, middle and right section of the depth image respectively. 
+#### State:
+We are taking as state input a depth image extended by the encoded information of the relative goal direction. Take a look at it by uncommenting [here](https://github.com/Kjell-K/AirGym/blob/master/gym_airsim/envs/myAirSimClient.py#L155). 
 
-#### Next step: 
-Be able to learn with full raw depth image. (For right now I am taking a screen shot of the DepthVis window of AirSim, since the API to receive the DepthVis image returns false data.)
-
-#### Issues:
-How to pass additional information beside the image. (While using the score values, there is no difficulty to pass more information like orientation or distance from goal in the gym.Box as well)
-
+#### Action:
+For this environment, we force the quadcopter to move in a fix plane and therefore confront the obstacles. The action space consist of three discrete actions and are available at any state:
+- straight: Move in direction of current heading with 4m/s for 1s
+- right yaw: Rotate right with 30°/s for 1s
+- left yaw: Rotate left with 30°/s for 1s
