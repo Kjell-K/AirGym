@@ -1,3 +1,11 @@
+Note: This repository is not maintained any longer and is very likely that new versions of AirSim will not be compatible (e.g. methods of AirSim now require different amount of inputs etc.). 
+
+However, from this project you can still retrace how to expose AirSim as an OpenAI Gym environment.
+
+If somebody updates for the newest AirSim, I would be happy for a pull request.
+
+___________________________________________
+
 # AirGym
 This repository integrates AirSim with openAI gym and keras-rl for autonomous vehicles through reinforcement learning. AirSim allows you to easly create your own environment in Unreal Editor and keras-rl let gives your the RL tools to solve the task. 
 
