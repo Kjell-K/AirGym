@@ -34,5 +34,5 @@ We are taking as state input a depth image extended by the encoded information o
 #### Action:
 For this environment, we force the quadcopter to move in a fix plane and therefore confront the obstacles. The action space consist of three discrete actions and are available at any state:
 - straight: Move in direction of current heading with 4m/s for 1s
-- right yaw: Rotate right with 30°/s for 1s
+- right yaw: Rotate right with 26°/s for 1s
 - left yaw: Rotate left with 30°/s for 1s
