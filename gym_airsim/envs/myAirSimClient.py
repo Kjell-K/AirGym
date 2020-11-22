@@ -1,3 +1,5 @@
+from AirSimClient_old import DrivetrainType
+from airsim.types import ImageRequest
 import numpy as np
 import time
 import math
@@ -10,8 +12,18 @@ import multiprocessing as mp
 # Change the path below to point to the directoy where you installed the AirSim PythonClient
 #sys.path.append('C:/Users/Kjell/Google Drive/MASTER-THESIS/AirSimpy')
 
-from AirSimClient import *
+from airsim import MultirotorClient
+import airsim
+import sys 
 
+class AirSimImageType:    
+    Scene = 0
+    DepthPlanner = 1
+    DepthPerspective = 2
+    DepthVis = 3
+    DisparityNormalized = 4
+    Segmentation = 5
+    SurfaceNormals = 6
 
 class myAirSimClient(MultirotorClient):
 
@@ -21,30 +33,46 @@ class myAirSimClient(MultirotorClient):
 
         MultirotorClient.__init__(self)
         MultirotorClient.confirmConnection(self)
-        self.enableApiControl(True)
-        self.armDisarm(True)
+        self.enableApiControl(True,vehicle_name="Drone0")
+        self.armDisarm(True,vehicle_name="Drone0")
     
-        self.home_pos = self.getPosition()
+        self.home_pos = self.getPosition(vehicle_name="Drone0")
     
-        self.home_ori = self.getOrientation()
+        self.home_ori = self.getOrientation(vehicle_name="Drone0")
         
         self.z = -6
+
     
+    def getPosition(self,vehicle_name = ""):
+        kin_state = self.getMultirotorState(vehicle_name=vehicle_name).kinematics_estimated
+        return kin_state.position
+
+    def getOrientation(self,vehicle_name = ""):
+        kin_state = self.getMultirotorState(vehicle_name=vehicle_name).kinematics_estimated
+        return kin_state.orientation
+
+    def getPitchRollYaw(self,vehicle_name=""):
+        return self.toEulerianAngle(self.getOrientation(vehicle_name=vehicle_name))
+
+    def rotateByYawRate(self, yaw_rate, duration,vehicle_name ):
+        return super().rotateByYawRateAsync( yaw_rate, duration,vehicle_name )
+
+
     def straight(self, duration, speed):
-        pitch, roll, yaw  = self.getPitchRollYaw()
+        pitch, roll, yaw  = self.getPitchRollYaw(vehicle_name="Drone0")
         vx = math.cos(yaw) * speed
         vy = math.sin(yaw) * speed
-        self.moveByVelocityZ(vx, vy, self.z, duration, DrivetrainType.ForwardOnly)
+        self.moveByVelocityZAsync(vx, vy, self.z, duration, DrivetrainType.ForwardOnly, vehicle_name = "Drone0" )
         start = time.time()
         return start, duration
     
     def yaw_right(self, duration):
-        self.rotateByYawRate(30, duration)
+        self.rotateByYawRate(30, duration,vehicle_name = "Drone0")
         start = time.time()
         return start, duration
     
     def yaw_left(self, duration):
-        self.rotateByYawRate(-30, duration)
+        self.rotateByYawRate(-30, duration,vehicle_name = "Drone0")
         start = time.time()
         return start, duration
     
@@ -53,10 +81,10 @@ class myAirSimClient(MultirotorClient):
 		
         #check if copter is on level cause sometimes he goes up without a reason
         x = 0
-        while self.getPosition().z_val < -7.0:
+        while self.getPosition(vehicle_name="Drone0").z_val < -7.0:
             self.moveToZ(-6, 3)
             time.sleep(1)
-            print(self.getPosition().z_val, "and", x)
+            print(self.getPosition(vehicle_name="Drone0").z_val, "and", x)
             x = x + 1
             if x > 10:
                 return True        
@@ -72,11 +100,11 @@ class myAirSimClient(MultirotorClient):
             start, duration = self.straight(1, 4)
         
             while duration > time.time() - start:
-                if self.getCollisionInfo().has_collided == True:
+                if self.simGetCollisionInfo(vehicle_name="Drone0").has_collided == True:
                     return True    
                 
-            self.moveByVelocity(0, 0, 0, 1)
-            self.rotateByYawRate(0, 1)
+            self.moveByVelocityAsync(0, 0, 0, 1,vehicle_name="Drone0")
+            self.rotateByYawRate(0, 1,vehicle_name="Drone0")
             
             
         if action == 1:
@@ -84,28 +112,28 @@ class myAirSimClient(MultirotorClient):
             start, duration = self.yaw_right(0.8)
             
             while duration > time.time() - start:
-                if self.getCollisionInfo().has_collided == True:
+                if self.simGetCollisionInfo(vehicle_name="Drone0").has_collided == True:
                     return True
             
-            self.moveByVelocity(0, 0, 0, 1)
-            self.rotateByYawRate(0, 1)
+            self.moveByVelocityAsync(0, 0, 0, 1,vehicle_name="Drone0")
+            self.rotateByYawRate(0, 1,vehicle_name="Drone0")
             
         if action == 2:
             
             start, duration = self.yaw_left(1)
             
             while duration > time.time() - start:
-                if self.getCollisionInfo().has_collided == True:
+                if self.simGetCollisionInfo(vehicle_name="Drone0").has_collided == True:
                     return True
                 
-            self.moveByVelocity(0, 0, 0, 1)
-            self.rotateByYawRate(0, 1)
+            self.moveByVelocityAsync(0, 0, 0, 1,vehicle_name="Drone0")
+            self.rotateByYawRate(0, 1,vehicle_name="Drone0")
             
         return collided
     
     def goal_direction(self, goal, pos):
         
-        pitch, roll, yaw  = self.getPitchRollYaw()
+        pitch, roll, yaw  = self.getPitchRollYaw(vehicle_name="Drone0")
         yaw = math.degrees(yaw) 
         
         pos_angle = math.atan2(goal[1] - pos.y_val, goal[0]- pos.x_val)
@@ -162,12 +190,43 @@ class myAirSimClient(MultirotorClient):
         
         self.reset()
         time.sleep(0.2)
-        self.enableApiControl(True)
-        self.armDisarm(True)
+        self.enableApiControl(True,vehicle_name="Drone0")
+        self.armDisarm(True,vehicle_name="Drone0")
         time.sleep(1)
-        self.moveToZ(self.z, 3) 
+        self.moveToZAsync(self.z, 3,vehicle_name="Drone0") 
         time.sleep(3)
-        
+    
+    @staticmethod
+    def toEulerianAngle(q):
+        z = q.z_val
+        y = q.y_val
+        x = q.x_val
+        w = q.w_val
+        ysqr = y * y
+
+        # roll (x-axis rotation)
+        t0 = +2.0 * (w*x + y*z)
+        t1 = +1.0 - 2.0*(x*x + ysqr)
+        roll = math.atan2(t0, t1)
+
+        # pitch (y-axis rotation)
+        t2 = +2.0 * (w*y - z*x)
+        if (t2 > 1.0):
+            t2 = 1
+        if (t2 < -1.0):
+            t2 = -1.0
+        pitch = math.asin(t2)
+
+        # yaw (z-axis rotation)
+        t3 = +2.0 * (w*z + x*y)
+        t4 = +1.0 - 2.0 * (ysqr + z*z)
+        yaw = math.atan2(t3, t4)
+
+        return (pitch, roll, yaw)
+
+
+    def position_to_list(position_vector) -> list:
+        return [position_vector.x_val, position_vector.y_val, position_vector.z_val]
     
     def AirSim_reset_old(self):
         
@@ -192,5 +251,5 @@ class myAirSimClient(MultirotorClient):
                         self.moveByVelocity(0, 0, 0, 1)
                         time.sleep(1)
                         
-        self.moveToZ(z, 3)  
+        self.moveToZAsync(z, 3,vehicle_name="Drone0")  
         time.sleep(3)
